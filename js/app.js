@@ -125,7 +125,7 @@ function initMap() {
     //bounds.extend(marker.position);
     // create onclick event
     marker.addListener('click', function() {
-      viewModel.getWikiData(this, largeInfowindow)
+      viewModel.getWikiData(this, largeInfowindow);
       //populateInfoWindow(this, largeInfowindow);
     });
 
@@ -165,7 +165,7 @@ var viewModel = {
 // http://knockoutjs.com/documentation/click-binding.html#note-1-passing-a-current-item-as-a-parameter-to-your-handler-function
 viewModel.clickLoc = function(clickedLoc) {
   //console.log('click')
-  console.log(clickedLoc) // use clickedLoc. marker to animate the marker and to open an info window
+  console.log(clickedLoc); // use clickedLoc. marker to animate the marker and to open an info window
         google.maps.event.trigger(clickedLoc.marker, 'click');
 };
 
@@ -221,25 +221,25 @@ viewModel.getWikiData = function(marker, infoWindow) {
       url: wikiUrl,
       dataType: dt,
       success: function(response) {
-        var articleName = response[1][0]
-        var articleURL = response[3][0]
-        var articleShortDescription = response[2][0]
+        var articleName = response[1][0];
+        var articleURL = response[3][0];
+        var articleShortDescription = response[2][0];
 
-        console.log(response)
-        console.log(articleName)
-        console.log(articleURL)
+        console.log(response);
+        console.log(articleName);
+        console.log(articleURL);
 
         var infoWindowContentString = '<h4>' + marker.title + '</h4>' +
                                       '<p>' + articleShortDescription + '</p>' +
-                                      '<a href="' + articleURL + '">' + articleName + '</a>'
+                                      '<a href="' + articleURL + '">' + articleName + '</a>';
 
-        infoWindow.setContent(infoWindowContentString)
+        infoWindow.setContent(infoWindowContentString);
         infoWindow.open(map, marker);
         clearTimeout(wikiRequestTimeout);
 
       }
     });
-}
+};
 
 viewModel.listMatch.subscribe(function(newValue) {
   //loop through markers && lists to see if they match
@@ -257,7 +257,7 @@ viewModel.listMatch.subscribe(function(newValue) {
       locDisplay.push(i);
     }
 
-    if (locations[i].marker) locations[i].marker.setVisible(includes)
+    if (locations[i].marker) locations[i].marker.setVisible(includes);
   }
   viewModel.locDisplay(locDisplay);
 
