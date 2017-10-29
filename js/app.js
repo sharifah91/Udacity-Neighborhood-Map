@@ -3,50 +3,74 @@ var map;
 var markers = [];
 
 var locations = [{
-    "title": "Heritage Village",
+    "title": "The Metropolitan Museum of Art",
     "location": {
-      lat: 25.3886804,
-      lng: 49.547084
+      lat: 40.7794366,
+      lng: -73.963244
     },
     isVisible: ko.observable(true)
   },
   {
-    "title": "Alahsa Hospital",
+    "title": "Museum of Modern Art",
     "location": {
-      lat: 25.3860343,
-      lng: 49.5720715
+      lat: 40.7614327,
+      lng: -73.9776216
     },
     isVisible: ko.observable(true)
   },
   {
-    "title": "Alahsa Intercontinental",
+    "title": "Solomon R. Guggenheim Museum",
     "location": {
-      lat: 25.3877499,
-      lng: 49.5805043
+      lat: 40.7829796,
+      lng: -73.9589706
     },
     isVisible: ko.observable(true)
   },
   {
-    "title": "Qaisariah Souq",
+    "title": "American Museum of Natural History",
     "location": {
-      lat: 25.3811587,
-      lng: 49.581073
+      lat: 40.7813241,
+      lng: -73.9739882
     },
     isVisible: ko.observable(true)
   },
   {
-    "title": "Othaim Mall",
+    "title": "Museum of the City of New York",
     "location": {
-      lat: 25.4045366,
-      lng: 49.5732624
+      lat: 40.792494,
+      lng: -73.951909
     },
     isVisible: ko.observable(true)
   },
   {
-    "title": "Hofuf Railway Station",
+    "title": "New-York Historical Society",
     "location": {
-      lat: 25.3873041,
-      lng: 49.5684773
+      lat: 40.779351,
+      lng: -73.974115
+    },
+    isVisible: ko.observable(true)
+  },
+  {
+    "title": "Intrepid Sea, Air & Space Museum",
+    "location": {
+      lat: 40.7645266,
+      lng: -73.9996076
+    },
+    isVisible: ko.observable(true)
+  },
+  {
+    "title": "Museum of the Moving Image",
+    "location": {
+      lat: 40.7563454,
+      lng: -73.9239496
+    },
+    isVisible: ko.observable(true)
+  },
+  {
+    "title": "Whitney Museum of American Art",
+    "location": {
+      lat: 40.7395877,
+      lng: -74.0088629
     },
     isVisible: ko.observable(true)
   }
@@ -56,8 +80,8 @@ function initMap() {
   //Create a new map
   map = new google.maps.Map(document.getElementById('map'), {
     center: {
-      lat: 25.3724513,
-      lng: 49.55347
+      lat: 40.7687768,
+      lng: -73.996203
     },
     zoom: 13
   });
@@ -167,7 +191,7 @@ function clickLoc(id) {
 }
 
 
-function showListings() {
+/*function showListings() {
   var bounds = new google.maps.LatLngBounds();
 
   for (var i = 0; i < markers.length; i++) {
@@ -181,7 +205,7 @@ function hideListings() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
   }
-}
+}*/
 
 viewModel.getWikiData = function(marker, infoWindow) {
   var query = marker.title,
@@ -189,21 +213,30 @@ viewModel.getWikiData = function(marker, infoWindow) {
      wikiBase = 'https://en.wikipedia.org/w/api.php',
      wikiUrl = wikiBase + '?action=opensearch&search=' + query + '&format=json&callback=wikiCallback';
 
+     var wikiRequestTimeout = setTimeout(function() {
+        $wikiElem.text('failed to get Wikipedia resources');
+     }, 8000);
+
     $.ajax({
       url: wikiUrl,
       dataType: dt,
       success: function(response) {
+        var articleName = response[1][0]
+        var articleURL = response[3][0]
+        var articleShortDescription = response[2][0]
 
         console.log(response)
+        console.log(articleName)
+        console.log(articleURL)
 
-        // set the info window content here
-        var infowindow = new google.maps.InfoWindow({
-            content: response
-          });
-        // open the info window here
-        marker.addListener('click', function() {
-        infowindow.open(marker, infoWindow);
-  });
+        var infoWindowContentString = '<h4>' + marker.title + '</h4>' +
+                                      '<p>' + articleShortDescription + '</p>' +
+                                      '<a href="' + articleURL + '">' + articleName + '</a>'
+
+        infoWindow.setContent(infoWindowContentString)
+        infoWindow.open(map, marker);
+        clearTimeout(wikiRequestTimeout);
+
       }
     });
 }
@@ -218,15 +251,13 @@ viewModel.listMatch.subscribe(function(newValue) {
 
     var currLocInfo = locations[i].title.toLowerCase();
 
-    if (currLocInfo.includes(newValue)) {
+    var includes = currLocInfo.includes(newValue);
+
+    if (includes) {
       locDisplay.push(i);
-      markers[i].setMap(map);
-      markers[i].setAnimation(google.maps.Animation.DROP);
-      mapBounds.extend(markers[i].position);
-      map.fitBounds(mapBounds);
-    } else {
-      markers[i].setMap(null);
     }
+
+    if (locations[i].marker) locations[i].marker.setVisible(includes)
   }
   viewModel.locDisplay(locDisplay);
 
