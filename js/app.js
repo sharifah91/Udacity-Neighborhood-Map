@@ -104,6 +104,11 @@ function initMap() {
   var largeInfowindow = new google.maps.InfoWindow();
   //var bounds = new google.maps.LatLngBounds();
 
+var WikiData = function() {
+      viewModel.getWikiData(this, largeInfowindow);
+      //populateInfoWindow(this, largeInfowindow);
+    };
+
   for (var i = 0; i < locations.length; i++) {
     // get the position from the array
     var position = locations[i].location;
@@ -124,11 +129,7 @@ function initMap() {
     // extend boundaries for each marker
     //bounds.extend(marker.position);
     // create onclick event
-    marker.addListener('click', function() {
-      viewModel.getWikiData(this, largeInfowindow);
-      //populateInfoWindow(this, largeInfowindow);
-    });
-
+    marker.addListener('click', WikiData);
     marker.addListener('mouseover', function() {
       this.setIcon("images/marker1.png");
     });
