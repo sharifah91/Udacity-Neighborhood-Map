@@ -185,14 +185,12 @@ function clickLoc(id) {
 
 /*function showListings() {
   var bounds = new google.maps.LatLngBounds();
-
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
     bounds.extend(markers[i].position);
   }
   map.fitBounds(bounds);
 }
-
 function hideListings() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
@@ -205,9 +203,9 @@ viewModel.getWikiData = function(marker, infoWindow) {
         wikiBase = 'https://en.wikipedia.org/w/api.php',
         wikiUrl = wikiBase + '?action=opensearch&search=' + query + '&format=json&callback=wikiCallback';
 
-    /*     var wikiRequestTimeout = setTimeout(function() {
-            $wikiElem.text('failed to get Wikipedia resources');
-         }, 8000);*/
+       var wikiRequestTimeout = setTimeout(function() {
+            alert('failed to get Wikipedia resources');
+         }, 8000);
 
     $.ajax({
         url: wikiUrl,
@@ -227,34 +225,44 @@ viewModel.getWikiData = function(marker, infoWindow) {
 
             infoWindow.setContent(infoWindowContentString);
             infoWindow.open(map, marker);
-            //clearTimeout(wikiRequestTimeout);
+            clearTimeout(wikiRequestTimeout);
 
+        },
+        error: function() {
+          alert("Wikipedia failed");
         }
     });
 };
 
-viewModel.listMatch.subscribe(function(newValue) {
+viewModel.filteredLocations = ko.computed(function() {
+
+  var filterInput = viewModel.listMatch().toLowerCase();
+
+    return ko.utils.arrayFilter(viewModel.cityLocations(), function(location) {
+      var match = location.title.toLowerCase().indexOf(filterInput) !== -1;
+      if (location.marker) {
+        location.marker.setVisible(match);
+      }
+      return match;
+  });
+
+  /*
     //loop to see if markers and list items match
-    newValue = newValue.toLowerCase();
+    newValue = newValue().toLowerCase();
     var mapBounds = new google.maps.LatLngBounds();
     var locDisplay = [];
-
     for (var i = 0; i < markers.length; i++) {
-
         var currLocInfo = locations[i].title.toLowerCase();
-
         var includes = currLocInfo.includes(newValue);
-
         if (includes) {
             locDisplay.push(i);
             markers[i].setMap(map);
             markers[i].setAnimation(google.maps.Animation.DROP);
         }
-
         if (locations[i].marker) locations[i].marker.setVisible(includes);
     }
     viewModel.locDisplay(locDisplay);
-
+*/
 });
 
 ko.applyBindings(viewModel);
