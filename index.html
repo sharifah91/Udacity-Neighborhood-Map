@@ -2,66 +2,67 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    html,
-    body {
-      font-family: Arial, sans-serif;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html,
+        body {
+            font-family: Arial, sans-serif;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-    #map {
-      bottom: 0px;
-      height: 100%;
-      left: 362px;
-      position: absolute;
-      right: 0px;
-    }
+        #map {
+            bottom: 0px;
+            height: 100%;
+            left: 362px;
+            position: absolute;
+            right: 0px;
+        }
 
-    .options-box {
-      background: #fff;
-      border: 1px solid #999;
-      border-radius: 3px;
-      height: 100%;
-      line-height: 35px;
-      padding: 10px 10px 30px 10px;
-      width: 340px;
-    }
-  </style>
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-  <link href="css/simple-sidebar.css" rel="stylesheet">
+        .options-box {
+            background: #fff;
+            border: 1px solid #999;
+            border-radius: 3px;
+            height: 100%;
+            line-height: 35px;
+            padding: 10px 10px 30px 10px;
+            width: 340px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link href="css/simple-sidebar.css" rel="stylesheet">
 </head>
 
 <body>
-  <div id="wrapper">
-    <div>
-      <h1>Museums at NYC</h1>
-      <strong>Search Museums: </strong><br>
-      <input id="listFilter" data-bind="textInput: listMatch" type="text" placeholder="">
-        <ul data-bind="foreach: cityLocations">
-            <li data-bind="text: title, click: $root.clickLoc">
-            </li>
-<!--        <input id="show-listings" type="button" value="Show Listings">
+    <div id="wrapper">
+        <div>
+            <h1>Museums at NYC</h1>
+            <strong>Search Museums: </strong><br>
+            <input id="listFilter" data-bind="textInput: listMatch" type="text" placeholder="">
+            <ul data-bind="foreach: cityLocations">
+                <li data-bind="text: title, click: $root.clickLoc">
+                </li>
+                <!--        <input id="show-listings" type="button" value="Show Listings">
             <input id="hide-listings" type="button" value="Hide Listings"> -->
-          </div>
+        </div>
         <div id="map"></div>
 
 
-  <script src="js/knockout-3.4.2.js"></script>
-  <script src="js/jquery.min.js"></script>
-  <script src="js/app.js"></script>
+        <script src="js/knockout-3.4.2.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/app.js"></script>
 
-  <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
+        <script>
+            $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
 
-  <!-- https://www.w3schools.com/jsref/event_onerror.asp -->
-  <script asunc defer src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyDJOWNNzIC0qB4pFBiSvp7Erl-UgzjK1Po&v=3&callback=initMap"></script>
+        <!-- https://www.w3schools.com/jsref/event_onerror.asp -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyDJOWNNzIC0qB4pFBiSvp7Erl-UgzjK1Po&v=3&callback=initMap" onerror="mapError()"></script>
 
 </body>
+
 </html>
