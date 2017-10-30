@@ -139,8 +139,8 @@ var WikiData = function() {
   }
   //map.fitBounds(bounds);
 
-  document.getElementById('show-listings').addEventListener('click', showListings);
-  document.getElementById('hide-listings').addEventListener('click', hideListings);
+  //document.getElementById('show-listings').addEventListener('click', showListings);
+  //document.getElementById('hide-listings').addEventListener('click', hideListings);
 }
 
 var viewModel = {
