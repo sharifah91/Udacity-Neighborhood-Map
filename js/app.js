@@ -126,8 +126,6 @@ function initMap() {
     }
     //map.fitBounds(bounds);
 
-    //document.getElementById('show-listings').addEventListener('click', showListings);
-    //document.getElementById('hide-listings').addEventListener('click', hideListings);
 }
 
 function mapError() {
@@ -136,7 +134,7 @@ function mapError() {
 
 var viewModel = {
     cityLocations: ko.observableArray(locations),
-    locDisplay: ko.observable([0, 1, 2, 3, 4, 5]),
+    locDisplay: ko.observable([0, 1, 2, 3, 4, 5, 6, 7, 8]),
     locList: function(id) {
         if (viewModel.locDisplay().indexOf(id) > -1) {
             return true;
