@@ -3,92 +3,10 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-        }
 
-        a#menu svg {
-            width: 40px;
-            fill: #000;
-        }
-
-        nav,
-        main {
-            padding: 1em;
-            box-sizing: border-box;
-        }
-
-        main {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Since we're mobile-first, by default, the drawer is hidden. */
-
-        nav {
-            width: 300px;
-            height: 100%;
-            position: absolute;
-            /* This trasform moves the drawer off canvas. */
-            -webkit-transform: translate(-300px, 0);
-            transform: translate(-300px, 0);
-            /* Optionally, we animate the drawer. */
-            transition: transform 0.3s ease;
-        }
-
-        nav.open {
-            -webkit-transform: translate(0, 0);
-            transform: translate(0, 0);
-        }
-
-        /* If there is enough space (> 600px), we keep the drawer open all the time. */
-
-        @media (min-width: 600px) {
-
-            /* We open the drawer. */
-            nav {
-                position: relative;
-                -webkit-transform: translate(0, 0);
-                transform: translate(0, 0);
-            }
-
-            /* We use Flexbox on the parent. */
-            body {
-                display: -webkit-flex;
-                display: flex;
-                -webkit-flex-flow: row nowrap;
-                flex-flow: row nowrap;
-            }
-
-            main {
-                width: auto;
-                /* Flex-grow streches the main content to fill all available space. */
-                flex-grow: 1;
-            }
-        }
-
-        /* If there is space (> 800px), we keep the drawer open by default. */
-
-        @media (min-width: 600px) {
-            main>#menu:after {
-                content: 'The drawer stays open if width > 600px';
-            }
-        }
-
-        #map {
-            bottom: 0px;
-            height: 100%;
-            left: 25%;
-            position: absolute;
-            right: 0px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 
-    <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -105,16 +23,15 @@
 
     <main>
         <a id="map">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
-      </svg>
-    </a>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+          </svg>
+        </a>
     </main>
 
 
     <script src="js/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
-    <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -135,8 +52,7 @@
             });*/
     </script>
 
-    <!-- https://www.w3schools.com/jsref/event_onerror.asp -->
-    <script asunc defer src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyDJOWNNzIC0qB4pFBiSvp7Erl-UgzjK1Po&v=3&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyDJOWNNzIC0qB4pFBiSvp7Erl-UgzjK1Po&v=3&callback=initMap" onerror="mapError()"></script>
 
 </body>
 
