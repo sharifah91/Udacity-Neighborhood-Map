@@ -157,7 +157,7 @@ viewModel.clickLoc = function(clickedLoc) {
     //console.log('click')
     console.log(clickedLoc); // use clickedLoc. marker to animate the marker and to open an info window
     google.maps.event.trigger(clickedLoc.marker, 'click');
-    markers[id].setAnimation(google.maps.Animation.DROP);
+    //markers[id].setAnimation(google.maps.Animation.DROP);
 
 };
 
@@ -203,9 +203,9 @@ viewModel.getWikiData = function(marker, infoWindow) {
         wikiBase = 'https://en.wikipedia.org/w/api.php',
         wikiUrl = wikiBase + '?action=opensearch&search=' + query + '&format=json&callback=wikiCallback';
 
-       var wikiRequestTimeout = setTimeout(function() {
-            alert('failed to get Wikipedia resources');
-         }, 8000);
+    var wikiRequestTimeout = setTimeout(function() {
+        alert('failed to get Wikipedia resources');
+    }, 8000);
 
     $.ajax({
         url: wikiUrl,
@@ -229,24 +229,24 @@ viewModel.getWikiData = function(marker, infoWindow) {
 
         },
         error: function() {
-          alert("Wikipedia failed");
+            alert("Wikipedia failed");
         }
     });
 };
 
 viewModel.filteredLocations = ko.computed(function() {
 
-  var filterInput = viewModel.listMatch().toLowerCase();
+    var filterInput = viewModel.listMatch().toLowerCase();
 
     return ko.utils.arrayFilter(viewModel.cityLocations(), function(location) {
-      var match = location.title.toLowerCase().indexOf(filterInput) !== -1;
-      if (location.marker) {
-        location.marker.setVisible(match);
-      }
-      return match;
-  });
+        var match = location.title.toLowerCase().indexOf(filterInput) !== -1;
+        if (location.marker) {
+            location.marker.setVisible(match);
+        }
+        return match;
+    });
 
-  /*
+    /*
     //loop to see if markers and list items match
     newValue = newValue().toLowerCase();
     var mapBounds = new google.maps.LatLngBounds();
